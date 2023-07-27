@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  bot-db:
+    image: postgres:15.2-alpine
+    container_name: bot-db
+    volumes:
+      - /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=bot_db
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+
+  rabbitmq:
+    image: rabbitmq:3.11.0-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    restart: always
+    volumes:
+      - /var/lib/rabbitmq/data
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+
+  dispatcher:
+    build:
+      context: ./dispatcher
+    container_name: dispatcher
+    restart: unless-stopped
+    ports:
+      - "8084:8084"
+    depends_on:
+      - rabbitmq
+    environment:
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+      - TZ=Europe/Moscow
+
+  reminder-service:
+    build:
+      context: ./reminder-service
+    container_name: reminder-service
+    restart: unless-stopped
+    ports:
+      - "8085:8085"
+    depends_on:
+      - bot-db
+      - rabbitmq
+    environment:
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://bot-db:5432/bot_db
+      - SPRING_DATASOURCE_USERNAME=username
+      - SPRING_DATASOURCE_PASSWORD=password
+      - TZ=Europe/Moscow
+
+
+
