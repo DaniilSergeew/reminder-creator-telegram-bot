@@ -6,7 +6,6 @@ import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -48,7 +47,7 @@ public class ReminderServiceImpl implements ReminderService {
      * @param update объект {@link Update}
      */
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public void processTextMessage(Update update) {
         AppUser appUser = findOrSaveAppUser(update);
         String text = update.getMessage().getText();
