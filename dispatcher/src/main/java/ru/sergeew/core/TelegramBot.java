@@ -1,5 +1,6 @@
 package ru.sergeew.core;
 
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -10,11 +11,11 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.sergeew.handlers.impl.UpdateHandler;
 
-import java.util.Optional;
 
 /**
  * Класс Telegram-бота, расширяющий TelegramLongPollingBot.
  */
+@Log4j
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
     @Value("${bot.name}")
@@ -54,7 +55,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             try {
                 execute(message);
             } catch (TelegramApiException e) {
-                System.out.println(e.getMessage());
+                log.error("Error sending the response: " + e.getMessage());
             }
         }
     }
@@ -69,7 +70,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             try {
                 execute(message);
             } catch (TelegramApiException e) {
-                System.out.println(e.getMessage());
+                log.error("Error sending the response: " + e.getMessage());
             }
         }
     }
@@ -84,7 +85,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             try {
                 execute(message);
             } catch (TelegramApiException e) {
-                System.out.println(e.getMessage());
+                log.error("Error sending the response: " + e.getMessage());
             }
         }
     }
