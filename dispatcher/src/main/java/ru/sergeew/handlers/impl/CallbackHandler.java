@@ -12,6 +12,7 @@ import static ru.sergeew.model.RabbitQueue.CALLBACK_QUERY;
 @AllArgsConstructor
 public class CallbackHandler implements Handler {
     private final ProducerServiceImpl updateProducer;
+
     @Override
     public boolean supports(Update update) {
         return update.hasCallbackQuery();

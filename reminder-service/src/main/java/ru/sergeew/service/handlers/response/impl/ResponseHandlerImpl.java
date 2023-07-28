@@ -34,7 +34,6 @@ public class ResponseHandlerImpl implements ResponseHandler {
         getHandlers().stream()
                 .filter(handler -> handler.supports(message))
                 .findFirst()
-                .ifPresentOrElse(handler -> handler.handle(message),
-                        () -> System.out.println("ResponseHandlerImpl: Хендлера не нашлось"));
+                .ifPresent(handler -> handler.handle(message));
     }
 }
