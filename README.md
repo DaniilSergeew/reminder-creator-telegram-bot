@@ -7,8 +7,10 @@
     <img src="files/img/bot logo.jpg" alt="Logo" width="200" height="200">
   </a>
 
-  <p align="center">
-    Удобный бот для создания напоминаний. Устанавливайте напоминания своими словами! Бот поможет вам не пропустить важные события и встречи.
+   <p align="center">
+      <a href="https://t.me/reminder_creator_bot"><strong>t.me/reminder_creator_bot</strong></a>
+   <br />
+      Удобный бот для создания напоминаний. Устанавливайте напоминания своими словами! Бот поможет вам не пропустить важные события и встречи.
   </p>
 
 # Reminder creator telegram bot
